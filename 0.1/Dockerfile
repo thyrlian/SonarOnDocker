@@ -58,5 +58,5 @@ VOLUME ["$SONARQUBE_HOME/data", "$SONARQUBE_HOME/extensions"]
 # Run
 # ---------------------------------------------------------------------- #
 WORKDIR $SONARQUBE_HOME
-COPY run.sh $SONARQUBE_HOME/bin/
-ENTRYPOINT ["./bin/run.sh"]
+COPY sonarqube-entrypoint.sh $SONARQUBE_HOME/bin/
+ENTRYPOINT ["./bin/sonarqube-entrypoint.sh"]
