@@ -7,6 +7,10 @@
 # official SonarQube  https://hub.docker.com/_/sonarqube/
 # official MySQL      https://hub.docker.com/_/mysql/
 #
+# version info:
+# SonarQube 5.4
+# MySQL 5.7.12
+#
 # ====================================================================== #
 
 
