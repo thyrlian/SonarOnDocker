@@ -27,7 +27,7 @@ MAINTAINER Jing Li <thyrlian@gmail.com>
 ENV SONARQUBE_HOME /opt/sonarqube
 ENV SONARQUBE_JDBC_USERNAME sonar
 ENV SONARQUBE_JDBC_PASSWORD sonar
-ENV SONARQUBE_JDBC_URL jdbc:h2:tcp://localhost:9092/sonar
+ENV SONARQUBE_JDBC_URL jdbc:mysql://db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
 ENV SONAR_VERSION 5.4
 
 
@@ -66,6 +66,9 @@ ENTRYPOINT ["./bin/sonarqube-entrypoint.sh"]
 # ---------------------------------------------------------------------- #
 ENV MYSQL_MAJOR 5.7
 ENV MYSQL_VERSION 5.7.12-1debian8
+ENV MYSQL_DATABASE sonar
+ENV MYSQL_USER sonar
+ENV MYSQL_PASSWORD sonar
 
 
 # Execute commands
@@ -80,8 +83,8 @@ RUN echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-${MYSQL_MAJOR}" > /
 
 RUN { \
 		echo mysql-community-server mysql-community-server/data-dir select ''; \
-		echo mysql-community-server mysql-community-server/root-pass password ''; \
-		echo mysql-community-server mysql-community-server/re-root-pass password ''; \
+		echo mysql-community-server mysql-community-server/root-pass password 'sonar'; \
+		echo mysql-community-server mysql-community-server/re-root-pass password 'sonar'; \
 		echo mysql-community-server mysql-community-server/remove-test-db select false; \
 	} | debconf-set-selections \
 	&& apt-get update && apt-get install -y mysql-server="${MYSQL_VERSION}" && rm -rf /var/lib/apt/lists/* \
