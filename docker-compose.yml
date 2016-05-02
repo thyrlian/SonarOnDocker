@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    volumes:
+      - /opt/sonarqube/extensions
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+    links:
+      - mysql
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=sonar
+      - MYSQL_ROOT_PASSWORD=sonar
+      - MYSQL_USER=sonar
+      - MYSQL_PASSWORD=sonar
+    volumes:
+      - /var/lib/mysql
