@@ -18,6 +18,20 @@ A Docker image contains **SonarQube** + **MySQL**
               \____\_______/
 ```
 
+## Persist Data
+
+* ```/var/lib/mysql```
+
+All historical analysis data, imported rules, changed settings are saved here.
+
+* ```/opt/sonarqube/extensions```
+
+SonarQube's plugins.
+
+* ```/opt/sonarqube/data/es```
+
+**Optional**: ElasticSearch indices, no need to be persisted, will be auto-generated.
+
 ## N.B.
 
 There is a permission problem when mounting a host directory in MySQL container using boot2docker.
