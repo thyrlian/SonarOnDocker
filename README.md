@@ -17,3 +17,14 @@ A Docker image contains **SonarQube** + **MySQL**
              \    \         __/
               \____\_______/
 ```
+
+## N.B.
+
+There is a permission problem when mounting a host directory in MySQL container using boot2docker.  So if you use Mac OS X, please try the approach below:
+
+1. Build a custom MySQL image:
+
+    ```console
+    docker build -t mysql_mac mysql_mac/
+    ```
+2. Edit *docker-compose.yml*, replace `image: mysql` by `image: mysql_mac`.
