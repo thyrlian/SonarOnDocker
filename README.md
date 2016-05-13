@@ -34,6 +34,10 @@ SonarQube's plugins.
 
 ## Upgrading
 
+**NOTE**
+
+Always keep a **backed up database** in case upgrade fails and roll back is needed.
+
 ### MySQL
 
 1. Perform a logical backup on the old version of MySQL
