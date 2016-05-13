@@ -106,6 +106,16 @@ SonarQube Server upgrade process is automated, you have nothing to manually chan
 
 **Migration path**: `[your_version] -> LTS (if exists) -> [expected_version]`
 
+Don't try to stop the SonarQube server, if you kill the process, the SonarQube container exits immediately.  So you can't really upgrade SonarQube by hand within its container.
+
+[Upgrading guide by SonarQube](http://docs.sonarqube.org/display/SONAR/Upgrading)
+
+Steps:
+
+1. Use the new sonarqube image in ***docker-compose.yml***;
+2. Run `docker-compose up`;
+3. Wait until sonarqube is up.
+
 ## N.B.
 
 There is a permission problem when mounting a host directory in MySQL container using boot2docker.
