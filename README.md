@@ -98,6 +98,10 @@ Now you have successfully restored the database on the new version of MySQL.  Th
 
 ### SonarQube
 
+SonarQube Server upgrade process is automated, you have nothing to manually change in the SonarQube Database.
+
+**Migration path**: `[your_version] -> LTS (if exists) -> [expected_version]`
+
 ## N.B.
 
 There is a permission problem when mounting a host directory in MySQL container using boot2docker.
