@@ -114,6 +114,21 @@ Steps:
 2. Run `docker-compose up`;
 3. Wait until sonarqube is up.
 
+For big SonarQube upgrading, it also requires database upgrading, but this happens automatically.
+
+1. After the new SonarQube container is up, open its web page, you'll be redirected to a maintenance page;
+
+    ```console
+    sonarqube_1  | 2099.12.31 12:00:00 WARN  web[o.s.s.p.DatabaseServerCompatibility] Database must be upgraded. Please backup database and browse /setup
+    sonarqube_1  | 2099.12.31 12:00:00 INFO  web[o.s.s.p.Platform] DB needs migration, entering safe mode
+    ```
+
+2. Open ***http://[your_sonarqube_url]:9000/setup***;
+
+3. Click the button to upgrade database.  The database upgrade can take several minutes.
+
+Just wait until the DB migration ends successfully.
+
 ## N.B.
 
 There is a permission problem when mounting a host directory in MySQL container using boot2docker.
