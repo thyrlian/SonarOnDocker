@@ -36,7 +36,7 @@ SonarQube's plugins.
 
 **NOTE**
 
-Always keep a **backed up database** in case upgrade fails and roll back is needed.
+⚠ Always keep a **backed up database** in case upgrade fails and roll back is needed.
 
 ### MySQL
 
