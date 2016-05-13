@@ -125,9 +125,9 @@ For big SonarQube upgrading, it also requires database upgrading, but this happe
 
 2. Open ***http://[your_sonarqube_url]:9000/setup***;
 
-3. Click the **Upgrade** button.  The database upgrade can take several minutes.
+3. Click the **Upgrade** button.
 
-Just wait until the DB migration ends successfully, the page will display "Database is up-to-date", then redirect you to home page.
+The database upgrade can take several minutes.  When the DB migration ends successfully, the page will display "Database is up-to-date", then redirect you to home page.
 
 ## N.B.
 
