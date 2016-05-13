@@ -34,8 +34,6 @@ SonarQube's plugins.
 
 ## Upgrading
 
-**NOTE**
-
 ⚠ Always keep a **backed up database** in case upgrade fails and roll back is needed.
 
 ### MySQL
@@ -106,9 +104,9 @@ SonarQube Server upgrade process is automated, you have nothing to manually chan
 
 **Migration path**: `[your_version] -> LTS (if exists) -> [expected_version]`
 
-Don't try to stop the SonarQube server, if you kill the process, the SonarQube container exits immediately.  So you can't really upgrade SonarQube by hand within its container.
+[Upgrading guide by SonarQube](http://docs.sonarqube.org/display/SONAR/Upgrading) (just for reference, please follow below steps.)
 
-[Upgrading guide by SonarQube](http://docs.sonarqube.org/display/SONAR/Upgrading)
+Don't try to stop the SonarQube server, if you kill the process, the SonarQube container exits immediately.  So you can't really upgrade SonarQube by hand within its container.  Don't worry, just try below steps.
 
 Steps:
 
