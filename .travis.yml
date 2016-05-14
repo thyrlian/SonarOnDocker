@@ -1,19 +1,8 @@
 language: bash
 services: docker
 
-env:
-  - VERSION=0.1
-
 install:
   - git clone https://github.com/thyrlian/SonarOnDocker ~/workspace
 
-before_script:
-  - env | sort
-  - cd "$VERSION"
-  - image="sonar:$VERSION"
-
 script:
-  - docker build -t "$image" .
-
-after_script:
-  - docker images
+  - docker-compose config
