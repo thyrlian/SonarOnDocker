@@ -5,4 +5,8 @@ install:
   - git clone https://github.com/thyrlian/SonarOnDocker ~/workspace
 
 script:
-  - docker-compose config
+  - echo "=================================================="
+  - docker-compose -v
+  - echo "=================================================="
+  # - docker-compose config
+  - docker-compose up && docker ps --filter status=running
