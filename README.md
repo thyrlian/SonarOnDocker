@@ -20,17 +20,19 @@ A Docker image contains **SonarQube** + **MySQL**
 
 ## Persist Data
 
-* ```/var/lib/mysql```
+* All historical analysis data, imported rules, changed settings are saved here.
 
-All historical analysis data, imported rules, changed settings are saved here.
+    ```
+    /var/lib/mysql
+    ```
 
-* ```/opt/sonarqube/extensions```
+* SonarQube's plugins.
 
-SonarQube's plugins.
+    ```
+    /opt/sonarqube/extensions
+    ```
 
-* ```/opt/sonarqube/data/es```
-
-**Optional**: ElasticSearch indices, no need to be persisted, will be auto-generated.
+Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es`), let it rebuild by itself (otherwise could cause problem during upgrading).
 
 ## Upgrading
 
