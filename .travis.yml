@@ -3,8 +3,3 @@ services: docker
 
 install:
   - git clone https://github.com/thyrlian/SonarOnDocker ~/workspace
-
-script:
-  - docker pull sonarqube
-  - docker pull mysql
-  - docker-compose up && docker ps --filter status=running
