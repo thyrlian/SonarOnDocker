@@ -148,3 +148,6 @@ So if you use Mac OS X, please try the approach below:
     docker build -t mysql_mac mysql_mac/
     ```
 2. Edit *docker-compose.yml*, replace `image: mysql` by `image: mysql_mac`.
+
+##License
+Copyright (c) 2016 Jing Li. **SonarOnDocker** is released under the GNU General Public License version 3. See the `LICENSE` file for details.
