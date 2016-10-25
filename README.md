@@ -18,6 +18,33 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
               \____\_______/
 ```
 
+## Getting Started
+
+### Setup
+
+1. Pull the latest docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and [**MySQL**](https://hub.docker.com/_/mysql/):
+
+    ```console
+    docker pull sonarqube
+    docker pull mysql
+    ```
+
+2. (Optional - only for Mac)
+
+    * Build a custom MySQL image for Mac:
+
+        ```console
+        docker build -t mysql_mac [PATH_OF_THIS_REPO_ON_YOUR_DISK]/mysql_mac/
+        ```
+
+    * Edit ***docker-compose.yml***, replace `image: mysql` by `image: mysql_mac`.
+
+### Play
+
+```console
+docker-compose -f [PATH_OF_THIS_REPO_ON_YOUR_DISK]/docker-compose.yml up
+```
+
 ## Persist Data
 
 * All historical analysis data, imported rules, changed settings are saved here.
@@ -147,7 +174,7 @@ So if you use Mac OS X, please try the approach below:
     ```console
     docker build -t mysql_mac mysql_mac/
     ```
-2. Edit *docker-compose.yml*, replace `image: mysql` by `image: mysql_mac`.
+2. Edit ***docker-compose.yml***, replace `image: mysql` by `image: mysql_mac`.
 
 ##License
 Copyright (c) 2016 Jing Li. **SonarOnDocker** is released under the GNU General Public License version 3. See the [LICENSE](https://github.com/thyrlian/SonarOnDocker/blob/master/LICENSE) file for details.
