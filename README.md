@@ -29,7 +29,14 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
     docker pull mysql
     ```
 
-2. (Optional - only for Mac)
+2. (Optional - Mac only) There is a permission problem when mounting a host directory in MySQL container using `boot2docker`.
+
+    ```console
+    [ERROR] InnoDB: Operating system error number 13 in a file operation.
+    [ERROR] InnoDB: The error means mysqld does not have the access rights to the directory.
+    ```
+
+    **Solution**:
 
     * Build a custom MySQL image for Mac:
 
@@ -157,24 +164,6 @@ For big SonarQube upgrading, it also requires database upgrading, but this happe
 3. Click the **Upgrade** button.
 
 The database upgrade can take several minutes.  When the DB migration ends successfully, the page will display "Database is up-to-date", then redirect you to home page.
-
-## N.B.
-
-There is a permission problem when mounting a host directory in MySQL container using boot2docker.
-
-```console
-[ERROR] InnoDB: Operating system error number 13 in a file operation.
-[ERROR] InnoDB: The error means mysqld does not have the access rights to the directory.
-```
-
-So if you use Mac OS X, please try the approach below:
-
-1. Build a custom MySQL image:
-
-    ```console
-    docker build -t mysql_mac mysql_mac/
-    ```
-2. Edit ***docker-compose.yml***, replace `image: mysql` by `image: mysql_mac`.
 
 ##License
 Copyright (c) 2016 Jing Li. **SonarOnDocker** is released under the GNU General Public License version 3. See the [LICENSE](https://github.com/thyrlian/SonarOnDocker/blob/master/LICENSE) file for details.
