@@ -42,25 +42,25 @@ Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es
 
 1. Perform a logical backup on the old version of MySQL
 
-    ```bash
+    ```console
     mysqldump -u sonar -p --opt sonar > [path_to_mysql_backup]/sonar.sql
     ```
 
 2. Start a MySQL docker container (new version of MySQL)
 
-    ```bash
+    ```console
     docker run -i -t -v [path_to_mysql_backup]:/tmp -v [path_to_persist_db]:/var/lib/mysql mysql /bin/bash
     ```
 
 3. Start MySQL server
 
-    ```bash
+    ```console
     /etc/init.d/mysql start
     ```
 
 4. Start MySQL client
 
-    ```bash
+    ```console
     mysql
     ```
 
@@ -94,7 +94,7 @@ Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es
 
 9. Stop MySQL server
 
-    ```bash
+    ```console
     /etc/init.d/mysql stop
     ```
 
