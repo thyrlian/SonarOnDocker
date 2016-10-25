@@ -29,7 +29,7 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
     docker pull mysql
     ```
 
-2. (Optional - Mac only) There is a permission problem when mounting a host directory in MySQL container using `boot2docker`.
+2. (Optional - Mac only) There is a permission problem when mount a host directory in MySQL container using `boot2docker`.
 
     ```console
     [ERROR] InnoDB: Operating system error number 13 in a file operation.
