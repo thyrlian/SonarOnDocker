@@ -5,6 +5,8 @@ services:
     image: sonarqube
     ports:
       - "9000:9000"
+    depends_on:
+      - "mysql"
     volumes:
       - /opt/sonarqube/extensions
     environment:
