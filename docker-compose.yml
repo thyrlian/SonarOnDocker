@@ -7,7 +7,7 @@ services:
       - "9000:9000"
     volumes:
       - /opt/sonarqube/extensions
-      - ./data/sonarqube:/opt/sonarqube/docker
+      - ./data/sonarqube/docker:/opt/sonarqube/docker
     environment:
       - SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
       - SONARQUBE_JDBC_USERNAME=sonar
