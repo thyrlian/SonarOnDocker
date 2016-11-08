@@ -7,6 +7,7 @@ services:
       - "9000:9000"
     volumes:
       - /opt/sonarqube/extensions
+      - ./data/sonarqube:/opt/sonarqube/docker
     environment:
       - SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
       - SONARQUBE_JDBC_USERNAME=sonar
@@ -16,48 +17,6 @@ services:
     entrypoint: |
       bash -c 'bash -s <<EOF
       trap "break;exit" SIGHUP SIGINT SIGTERM
-      
-      mkdir -p /opt/sonarqube/docker/com/basgeekball/db
-      cat << END_CODE > /opt/sonarqube/docker/com/basgeekball/db/Detector.java
-      package com.basgeekball.db;
-
-      import java.sql.Connection;
-      import java.sql.DriverManager;
-      import java.sql.SQLException;
-
-      public class Detector {
-        public static void main(String[] args) throws InterruptedException {
-          try {
-            Class.forName("com.mysql.jdbc.Driver");
-          } catch (ClassNotFoundException e) {
-            System.out.println("#==> ⚠ Can not find JDBC driver for MySQL.");
-            e.printStackTrace();
-            System.exit(1);
-          }
-          String url = "jdbc:mysql://mysql:3306/sonar";
-          String user = "sonar";
-          String password = "sonar";
-          int retries = 120;
-          long interval = 500;
-          Connection connection;
-          for (int i = 0; i < retries; i++) {
-            try {
-              connection = DriverManager.getConnection(url, user, password);
-              if (connection != null) {
-                System.out.println("#==> ⚡ DB connection is successful.");
-                return;
-              }
-            } catch (SQLException e) {
-              System.out.println("#==> ⚠ Can not establish a connection to the DB.");
-            }
-            Thread.sleep(interval);
-          }
-          System.out.println("#==> ⚠ Failed to connect to the DB.  Quit.");
-          System.exit(1);
-        }
-      }
-      END_CODE
-      
       javac /opt/sonarqube/docker/com/basgeekball/db/Detector.java
       java -cp `find /opt/sonarqube/ -name "mysql-connector*.jar"`:/opt/sonarqube/docker com.basgeekball.db.Detector && ./bin/run.sh
       EOF'
