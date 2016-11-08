@@ -16,7 +16,7 @@ public class Detector {
     String url = "jdbc:mysql://mysql:3306/sonar";
     String user = "sonar";
     String password = "sonar";
-    int retries = 30;
+    int retries = 120;
     long interval = 500;
     Connection connection;
     for (int i = 0; i < retries; i++) {
