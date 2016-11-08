@@ -46,6 +46,15 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
 
     * Edit ***docker-compose.yml***, replace `image: mysql` by `image: mysql_mac`.
 
+3. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose.yml*** file.
+
+    ```
+    - [path_to_persist_sonar_data_on_host]:/opt/sonarqube/extensions
+    - [path_to_persist_mysql_data_on_host]:/var/lib/mysql
+    ```
+
+    Note: the path to persist data on host could be a relative path, e.g.: `./data/xyz`
+
 ### Play
 
 ```console
