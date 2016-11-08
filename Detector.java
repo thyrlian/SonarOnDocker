@@ -11,7 +11,7 @@ public class Detector {
     } catch (ClassNotFoundException e) {
       System.out.println("#==> ⚠ Can not find JDBC driver for MySQL.");
       e.printStackTrace();
-      return;
+      System.exit(1);
     }
     String url = "jdbc:mysql://mysql:3306/sonar";
     String user = "sonar";
@@ -32,5 +32,6 @@ public class Detector {
       Thread.sleep(interval);
     }
     System.out.println("#==> ⚠ Failed to connect to the DB.  Quit.");
+    System.exit(1);
   }
 }
