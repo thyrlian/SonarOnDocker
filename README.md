@@ -18,6 +18,34 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
               \____\_______/
 ```
 
+## Pitfalls
+
+Orchestrating Docker with compose sounds easy, but sometimes could be full of pitfalls in practice.  If you just wanna use it, please jump directly to [**Getting Started**](https://github.com/thyrlian/SonarOnDocker/blob/master/README.md#getting-started).
+
+Running both SonarQube and MySQL containers together by compose could encounter such error:
+
+```console
+Can not connect to database. Please check connectivity and settings (see the properties prefixed by 'sonar.jdbc.').
+```
+
+The problem is because of MySQL database initialization takes a bit longer than SonarQube's boot time, especially when there is no persisted database.
+
+Ideas but not working:
+
+* [`depends_on`](https://docs.docker.com/compose/compose-file/#/dependson) will start services in dependency order, but won't wait for any service to be ready.
+
+* Check the database port 3306 using [wait-for-it](https://github.com/vishnubob/wait-for-it) recommended by Docker's [Controlling startup order in Compose](https://docs.docker.com/compose/startup-order/) doesn't help.  Because the port will be available right after the DB container starts, while it doesn't mean that the DB connection is ready.  Just forget about `nc -v -n -z -w1 $HOST $PORT`.
+
+* MySQL log is only accessible with inside MySQL container, or from the host machine, but not for SonarQube container.  Thus you could not easily do `grep 'ready for connections'`.  Maybe you could try to persist MySQL log to host directory, and then mount it to SonarQube container, so that you could read it from there.  But mounting the same host directory to multiple running containers is not really a good idea.
+
+* How about executing `mysql -e "select 1"` to check the database availability?  Yep, but wait, SonarQube container doesn't have mysql client installed, and we have no control of the official SonarQube docker image.
+
+* Another hack: setup a minimal (one-liner) web server at MySQL container, tell the DB status.  `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`  Unfortunately, again, `netcat` is not installed by MySQL container.
+
+* Since Docker v1.12, there is a [new feature](https://docs.docker.com/engine/reference/builder/#/healthcheck): `HEALTHCHECK [OPTIONS] CMD command`, but not for docker-compose yet.  And still, you have to write the command by yourself to tell docker what to check.
+
+* Finally, here comes a easy solution: using [JDBC](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java).
+
 ## Getting Started
 
 ### Setup
