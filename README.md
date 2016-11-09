@@ -20,7 +20,7 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
 
 ## Pitfalls
 
-Orchestrating Docker with compose sounds easy, but sometimes could be full of pitfalls in practice.  If you just wanna use it, please jump directly to [**Getting Started**](https://github.com/thyrlian/SonarOnDocker/blob/master/README.md#getting-started).
+Orchestrating Docker with compose sounds easy, but sometimes could be full of pitfalls in practice.  If you just wanna use it, jump directly to [**Getting Started**](https://github.com/thyrlian/SonarOnDocker/blob/master/README.md#getting-started).
 
 Running both SonarQube and MySQL containers together by compose could encounter such error:
 
@@ -28,7 +28,7 @@ Running both SonarQube and MySQL containers together by compose could encounter 
 Can not connect to database. Please check connectivity and settings (see the properties prefixed by 'sonar.jdbc.').
 ```
 
-The problem is because of MySQL database initialization takes a bit longer than SonarQube's boot time, especially when there is no persisted database.
+It's because MySQL database initialization takes a bit longer than SonarQube's boot time, especially when there is no persisted database.
 
 Ideas but not working:
 
