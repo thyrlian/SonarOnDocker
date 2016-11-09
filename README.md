@@ -22,14 +22,16 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
 
 ### Setup
 
-1. Pull the latest docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and [**MySQL**](https://hub.docker.com/_/mysql/):
+1. Make sure that you've cloned the whole project, especially the ***Detector.java*** under [`data/sonarqube/docker/com/basgeekball/db`](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java).
+
+2. Pull the latest docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and [**MySQL**](https://hub.docker.com/_/mysql/):
 
     ```console
     docker pull sonarqube
     docker pull mysql
     ```
 
-2. (Optional - Mac only) There is a permission problem when mount a host directory in MySQL container using `boot2docker`.
+3. (Optional - Mac only) There is a permission problem when mount a host directory in MySQL container using `boot2docker`.
 
     ```console
     [ERROR] InnoDB: Operating system error number 13 in a file operation.
@@ -46,7 +48,7 @@ Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker app
 
     * Edit ***docker-compose.yml***, replace `image: mysql` by `image: mysql_mac`.
 
-3. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose.yml*** file.
+4. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose.yml*** file.
 
     ```
     - [path_to_persist_sonar_data_on_host]:/opt/sonarqube/extensions
