@@ -7,7 +7,7 @@ services:
 
 install:
   - git clone https://github.com/thyrlian/SonarOnDocker ~/workspace
-  - ls ~/workspace/SonarOnDocker
+  - ls ~/workspace/
 
 script:
   - docker-compose -f ~/workspace/SonarOnDocker/docker-compose.yml up
