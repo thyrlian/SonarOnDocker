@@ -40,7 +40,7 @@ Failed Attempts:
 
 * **Database command**: how about simply executing `mysql -e "select 1"` to check the database availability?  Yep, but wait a second, the SonarQube container doesn't have mysql client installed, and we have no control of the official SonarQube docker image.
 
-* **Web Server**: yet another hack - setting up a minimal (one-liner) web server at the MySQL container, responds with the database status, just like `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`.  Unfortunately again, `netcat` is not installed by the MySQL container.
+* **Web Server**: yet another hack - setting up a minimal (one-liner) web server at the MySQL container, responds with the database status, just like `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`.  Unfortunately again, netcat is not installed by the MySQL container.
 
 * [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#/healthcheck) **instruction**: new feature since Docker v1.12, but not for docker-compose yet.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  Still, you have to write the command on your own, to tell docker what to check.
 
