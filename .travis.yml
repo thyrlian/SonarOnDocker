@@ -9,4 +9,21 @@ install:
   - git clone https://github.com/thyrlian/SonarOnDocker ~/SonarOnDocker
 
 script:
-  - docker-compose -f ~/SonarOnDocker/docker-compose.yml up
+  - docker pull sonarqube
+  - docker pull mysql
+  - docker-compose -f ~/SonarOnDocker/docker-compose.yml up &
+  - for ((i=1; i<=300; i++)) { echo "wait $i ..."; sleep 1; if docker ps -aqf "ancestor=mysql" | xargs docker logs 2>&1 | grep 'ready for connections' && docker ps -aqf "ancestor=sonarqube" | xargs docker logs 2>&1 | grep 'Process\[web\] is up'; then return 0; fi } && return 1
+  - curl -s -w "%{http_code}\\n" "http://localhost:9000/" -o /dev/null | grep "200" &> /dev/null
+  - curl -I 'http://localhost:9000' 2>/dev/null | head -n 1 | cut -d$' ' -f2 | grep "200" &> /dev/null
+
+after_success:
+  - echo "---------- Docker orchestration succeeded! ----------"
+
+after_failure:
+  - echo "---------- Docker orchestration failed! ----------"
+  - echo "---------- MySQL logs ----------"
+  - echo "=================================================="
+  - docker ps -aqf "ancestor=mysql" | xargs docker logs 2>&1
+  - echo "---------- SonarQube logs ----------"
+  - echo "=================================================="
+  - docker ps -aqf "ancestor=sonarqube" | xargs docker logs 2>&1
