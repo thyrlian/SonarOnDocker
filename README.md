@@ -32,7 +32,7 @@ It's because MySQL database initialization takes a bit longer than SonarQube's b
 
 Failed Attempts:
 
-* [**`depends_on` option**](https://docs.docker.com/compose/compose-file/#/dependson): it will start services in dependency order, but won't wait for the dependent service to be ready.
+* [**`depends_on`**](https://docs.docker.com/compose/compose-file/#/dependson) **option**: it will start services in dependency order, but won't wait for the dependent service to be ready.
 
 * **wait script**: [wait-for-it](https://github.com/vishnubob/wait-for-it) recommended by Docker's [Controlling startup order in Compose](https://docs.docker.com/compose/startup-order/), which checks the database port and waits.  Unluckily, this doesn't help.  The reason is that the port will be available right after the database container starts, while it doesn't mean that the database connection is ready.  Just forget about `nc -v -n -z -w1 $HOST $PORT`.
 
@@ -42,7 +42,7 @@ Failed Attempts:
 
 * **Web Server**: yet another hack - setup a minimal (one-liner) web server at the MySQL container, responds with the database status, just like `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`.  Unfortunately again, `netcat` is not installed by the MySQL container.
 
-* [**`HEALTHCHECK` instruction**](https://docs.docker.com/engine/reference/builder/#/healthcheck): new feature since Docker v1.12, but not for docker-compose yet.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  Still, you have to write the command on your own, to tell docker what to check.
+* [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#/healthcheck) **instruction**: new feature since Docker v1.12, but not for docker-compose yet.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  Still, you have to write the command on your own, to tell docker what to check.
 
 * **Finally**, here comes an easy solution: creating a [Java file](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java), which has some code via JDBC to check the database availability (Java environment and JDBC jar are both available within SonarQube container).
 
