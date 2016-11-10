@@ -1,6 +1,6 @@
 # Sonar On Docker
 
-Perfect Docker Compose to configure and run **SonarQube** + **MySQL** docker applications.
+Complete Docker Compose guide to configure and run **SonarQube** + **MySQL** docker applications.
 
 [![](https://img.shields.io/badge/Docker%20Hub-info-blue.svg)](https://hub.docker.com/r/thyrlian/sonar/)
 [![Build Status](https://travis-ci.org/thyrlian/SonarOnDocker.svg?branch=master)](https://travis-ci.org/thyrlian/SonarOnDocker)
@@ -28,9 +28,9 @@ Running both SonarQube and MySQL containers together by compose could encounter 
 Can not connect to database. Please check connectivity and settings (see the properties prefixed by 'sonar.jdbc.').
 ```
 
-It's because MySQL database initialization takes a bit longer than SonarQube's boot time, especially when there is no persisted database.
+It's because MySQL database initialization takes a bit longer than SonarQube's boot time, especially when there is no persisted database yet.
 
-Ideas but not working:
+Failed Attempts:
 
 * [`depends_on`](https://docs.docker.com/compose/compose-file/#/dependson) will start services in dependency order, but won't wait for any service to be ready.
 
