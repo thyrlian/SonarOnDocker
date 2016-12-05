@@ -46,9 +46,11 @@ So, how to detect the readiness state of the database connection?
 
 * **Database logs**: MySQL writes its readiness status to the logs, so maybe we could try searching there with `grep 'ready for connections'`.  Normally, the logs are only accessible within the MySQL container, or from the host machine, but not from the SonarQube container.  Perhaps we could try to persist MySQL logs to the host directory by adding `command: bash -c "mkdir -p /var/log/mysql && mysqld 2>&1 | tee /var/log/mysql/mysql.log"` and `volumes: ./data/mysql:/var/log/mysql`.  Then we could mount the volume to share it with the SonarQube container, so that it would be available there.  But do we really want to mess with adding `command` and `volumes` configurations on both services' sides?
 
+There has to be a better way…
+
 **What worked**:
 
-* **JDBC**: finally, here comes an easy solution - creating a [java file](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java), which has some code utilizing JDBC to check the database availability (Java environment and JDBC jar are both available within the SonarQube container).  Just override the entrypoint of the SonarQube container, first check the database availability via this java code, then run the default entrypoint shell script when the database is ready.  Pretty slick and it works great!
+* **JDBC**: finally, there comes an easy solution - creating a [Java file](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java) with some JDBC code that checks the database availability (lucky for us, a Java environment and the JDBC jar file are both available in the SonarQube container).  All we needed to do is override the entrypoint of the SonarQube container to first check the database availability via this Java code, then run the default entrypoint shell script when the database is ready. Pretty slick and it works great!
 
 ## Getting Started
 
