@@ -30,7 +30,7 @@ Can not connect to database. Please check connectivity and settings (see the pro
 
 It’s because the MySQL database initialization process takes a bit longer than SonarQube’s boot time, especially when there is no persistent database.
 
-What failed:
+**What failed**:
 
 * [**`depends_on`**](https://docs.docker.com/compose/compose-file/#/dependson) **option**: it will start services in dependency order, but won't wait for the dependent service to be ready.
 
@@ -44,7 +44,7 @@ What failed:
 
 * [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#/healthcheck) **instruction**: new feature since Docker v1.12, but not for docker-compose yet.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  Still, you have to write the command on your own, to tell docker what to check.
 
-What worked:
+**What worked**:
 
 * **JDBC**: finally, here comes an easy solution - creating a [java file](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java), which has some code utilizing JDBC to check the database availability (Java environment and JDBC jar are both available within the SonarQube container).  Just override the entrypoint of the SonarQube container, first check the database availability via this java code, then run the default entrypoint shell script when the database is ready.  Pretty slick and it works great!
 
