@@ -38,13 +38,13 @@ So, how to detect the readiness state of the database connection?
 
 * **wait script**: The [wait-for-it](https://github.com/vishnubob/wait-for-it) script recommended in Docker's [Controlling startup order in Compose](https://docs.docker.com/compose/startup-order/) article can be used to check the availability of the database port and wait.  Unfortunately, this doesn't help either.  The reason is that the port will be available right after the database container starts, but that doesn’t mean the database connection is ready.  Just forget about `nc -v -n -z -w1 $HOST $PORT`.
 
+* [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#/healthcheck) **instruction**: This new feature is available for Dockerfiles since version 1.12, but not yet for docker-compose.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  This sounds promising, but you still have to write the command on your own, to tell docker what to check.
+
+* **Database command**: How about running `mysql -e "select 1"` to check the database availability?  Yep - but wait a second - the SonarQube container doesn't have a mysql client installed, and we have no control over the official SonarQube docker image.
+
+* **Web Server**: Yet another hack - what if we set up a minimal (one-liner) web server in the MySQL container that responds with the database status?  Something like `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`.  Unfortunately again, netcat is not installed in the MySQL container.
+
 * **Database logs**: the readiness status of MySQL is written in its logs, could be read by `grep 'ready for connections'`.  Well, keep in mind, the logs are only accessible with inside the MySQL container, or from the host machine, but not from the SonarQube container.  Maybe you wanna try to persist MySQL logs to the host directory by adding `command: bash -c "mkdir -p /var/log/mysql && mysqld 2>&1 | tee /var/log/mysql/mysql.log"` and `volumes: ./data/mysql:/var/log/mysql`, and then mount it to (share the volume with) the SonarQube container, so that it could be gotten from there.  Hmm, I don't want to mess it up with adding `command` and `volumes` configurations at both services' sides.  Is there any better idea?
-
-* **Database command**: how about simply executing `mysql -e "select 1"` to check the database availability?  Yep, but wait a second, the SonarQube container doesn't have mysql client installed, and we have no control of the official SonarQube docker image.
-
-* **Web Server**: yet another hack - setting up a minimal (one-liner) web server at the MySQL container, responds with the database status, just like `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`.  Unfortunately again, netcat is not installed by the MySQL container.
-
-* [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#/healthcheck) **instruction**: new feature since Docker v1.12, but not for docker-compose yet.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  Still, you have to write the command on your own, to tell docker what to check.
 
 **What worked**:
 
