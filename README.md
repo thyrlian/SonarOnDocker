@@ -30,6 +30,8 @@ Can not connect to database. Please check connectivity and settings (see the pro
 
 It’s because the MySQL database initialization process takes a bit longer than SonarQube’s boot time, especially when there is no persistent database.
 
+So, how to detect the readiness state of the database connection?
+
 **What failed**:
 
 * [**`depends_on`**](https://docs.docker.com/compose/compose-file/#/dependson) **option**: it will start services in dependency order, but won't wait for the dependent service to be ready.
