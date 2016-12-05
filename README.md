@@ -20,17 +20,17 @@ Complete Docker Compose guide to configure and run **SonarQube** + **MySQL** doc
 
 ## Pitfalls
 
-Orchestrating Docker with compose sounds easy, but sometimes could be full of pitfalls in practice.  If you just wanna use it, jump directly to [**Getting Started**](https://github.com/thyrlian/SonarOnDocker/blob/master/README.md#getting-started).
+Orchestrating Docker with compose sounds easy, but there are a few pitfalls in practice.  Read on to learn about the whole story, or if you just wanna run it, jump directly to [**Getting Started**](https://github.com/thyrlian/SonarOnDocker/blob/master/README.md#getting-started).
 
-Running both SonarQube and MySQL containers together by compose could encounter such error:
+When running SonarQube and MySQL containers together by compose for the first time, you may encounter errors like this:
 
 ```console
 Can not connect to database. Please check connectivity and settings (see the properties prefixed by 'sonar.jdbc.').
 ```
 
-It's because MySQL database initialization takes a bit longer than SonarQube's boot time, especially when there is no persisted database yet.
+It’s because the MySQL database initialization process takes a bit longer than SonarQube’s boot time, especially when there is no persistent database.
 
-Failed Attempts:
+What failed:
 
 * [**`depends_on`**](https://docs.docker.com/compose/compose-file/#/dependson) **option**: it will start services in dependency order, but won't wait for the dependent service to be ready.
 
@@ -43,6 +43,8 @@ Failed Attempts:
 * **Web Server**: yet another hack - setting up a minimal (one-liner) web server at the MySQL container, responds with the database status, just like `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`.  Unfortunately again, netcat is not installed by the MySQL container.
 
 * [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#/healthcheck) **instruction**: new feature since Docker v1.12, but not for docker-compose yet.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  Still, you have to write the command on your own, to tell docker what to check.
+
+What worked:
 
 * **JDBC**: finally, here comes an easy solution - creating a [java file](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java), which has some code utilizing JDBC to check the database availability (Java environment and JDBC jar are both available within the SonarQube container).  Just override the entrypoint of the SonarQube container, first check the database availability via this java code, then run the default entrypoint shell script when the database is ready.  Pretty slick and it works great!
 
