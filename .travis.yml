@@ -6,7 +6,7 @@ services:
   - docker
 
 install:
-  - git clone https://github.com/thyrlian/SonarOnDocker ~/SonarOnDocker
+  - git clone https://github.com/thyrlian/SonarOnDocker.git ~/SonarOnDocker
 
 script:
   - docker pull sonarqube
