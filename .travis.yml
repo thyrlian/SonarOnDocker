@@ -13,8 +13,7 @@ script:
   - docker pull mysql
   - docker-compose -f ~/SonarOnDocker/docker-compose.yml up &
   - for ((i=1; i<=300; i++)) { sleep 1; if docker ps -aqf "ancestor=mysql" | xargs docker logs 2>&1 | grep "ready for connections" &> /dev/null && docker ps -aqf "ancestor=sonarqube" | xargs docker logs 2>&1 | grep "Process\[web\] is up" &> /dev/null; then return 0; fi } && return 1
-  - curl -s -w "%{http_code}\\n" "http://127.0.0.1:9000/" -o /dev/null | grep "200" &> /dev/null
-  - curl -v "http://0.0.0.0:9000/"
+  - curl -s -w "%{http_code}\\n" "http://localhost:9000/" -o /dev/null | grep "200\|302" &> /dev/null
 
 after_success:
   - echo "---------- Docker orchestration succeeded! ----------"
