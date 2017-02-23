@@ -56,13 +56,13 @@ There has to be a better way…
 
 ### Setup
 
-1. Make sure that you've cloned the whole project, particularly the ***Detector.java*** under [`data/sonarqube/docker/com/basgeekball/db`](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java).
+1. Make sure that you've cloned the whole project, particularly the [***Detector.java***](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java).
 
-2. Pull the latest docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and [**MySQL**](https://hub.docker.com/_/mysql/):
+2. Pull the desired version of docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and [**MySQL**](https://hub.docker.com/_/mysql/):
 
     ```console
-    docker pull sonarqube
-    docker pull mysql
+    docker pull sonarqube[:TAG]
+    docker pull mysql[:TAG]
     ```
 
 3. (Optional - Mac only) There is a permission problem when mount a host directory in MySQL container using `boot2docker`.
@@ -77,7 +77,7 @@ There has to be a better way…
     * Build a custom MySQL image for Mac:
 
         ```console
-        docker build -t mysql_mac [PATH_OF_THIS_REPO_ON_YOUR_DISK]/mysql_mac/
+        docker build -t mysql_mac[:TAG] [PATH_OF_THIS_REPO_ON_YOUR_DISK]/mysql_mac/
         ```
 
     * Edit ***docker-compose.yml***, replace `image: mysql` by `image: mysql_mac`.
@@ -85,11 +85,13 @@ There has to be a better way…
 4. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose.yml*** file.
 
     ```
-    - [path_to_persist_sonar_data_on_host]:/opt/sonarqube/extensions
-    - [path_to_persist_mysql_data_on_host]:/var/lib/mysql
+    - [PATH_TO_PERSIST_SONAR_DATA_ON_HOST]:/opt/sonarqube/extensions
+    - [PATH_TO_PERSIST_MYSQL_DATA_ON_HOST]:/var/lib/mysql
     ```
 
     Note: the path to persist data on host could be a relative path, e.g.: `./data/xyz`
+
+5. Instead of using default empty tag or dynamic `latest` tag, please alter them in `Dockerfile` or `docker-compose` file with more specific tags.  Because `latest` can lead to unpredictable and unrepeatable image builds.
 
 ### Play
 
