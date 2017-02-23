@@ -124,13 +124,13 @@ Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es
 1. Perform a logical backup on the old version of MySQL
 
     ```console
-    mysqldump -u sonar -p --opt sonar > [path_to_mysql_backup]/sonar.sql
+    mysqldump -u sonar -p --opt sonar > [PATH_TO_MYSQL_BACKUP]/sonar.sql
     ```
 
 2. Start a MySQL docker container (new version of MySQL)
 
     ```console
-    docker run -i -t -v [path_to_mysql_backup]:/tmp -v [path_to_persist_db]:/var/lib/mysql mysql /bin/bash
+    docker run -i -t -v [PATH_TO_MYSQL_BACKUP]:/tmp -v [PATH_TO_PERSIST_DB]:/var/lib/mysql mysql /bin/bash
     ```
 
 3. Start MySQL server
@@ -185,7 +185,7 @@ Now you have successfully restored the database on the new version of MySQL.  Th
 
 SonarQube Server upgrade process is automated, you have nothing to manually change in the SonarQube Database.
 
-**Migration path**: `[your_version] -> LTS (if exists) -> [expected_version]`
+**Migration path**: `[YOUR_VERSION] -> LTS (if exists) -> [EXPECTED_VERSION]`
 
 [Upgrading guide by SonarQube](http://docs.sonarqube.org/display/SONAR/Upgrading) (just for reference, please follow below steps.)
 
@@ -206,7 +206,7 @@ For big SonarQube upgrading, it also requires database upgrading, but this happe
     sonarqube_1  | 2099.12.31 12:00:00 INFO  web[o.s.s.p.Platform] DB needs migration, entering safe mode
     ```
 
-2. Open ***http://[your_sonarqube_url]:9000/setup***;
+2. Open ***http://[YOUR_SONARQUBE_URL]:9000/setup***;
 
 3. Click the **Upgrade** button.
 
