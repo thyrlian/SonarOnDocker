@@ -31,3 +31,4 @@ services:
       - MYSQL_PASSWORD=sonar
     volumes:
       - /var/lib/mysql
+      - ./data/mysqlconf:/etc/mysql/conf.d
