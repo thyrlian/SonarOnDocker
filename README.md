@@ -65,6 +65,12 @@ There has to be a better way…
     docker pull mysql[:TAG]
     ```
 
+    **Heads-up**: It's not a good idea to use the latest version of MySQL without checking [SonarQube requirements](https://docs.sonarqube.org/display/SONAR/Requirements).  For instance, SonarQube 6.3 only supports MySQL 5.6 & 5.7.  And if you spin up SonarQube 6.3 with MySQL 8.0, an exception would be thrown:
+
+    ```console
+    com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server.
+    ```
+
 3. (Optional - Mac only) There is a permission problem when mount a host directory in MySQL container using `boot2docker`.
 
     ```console
