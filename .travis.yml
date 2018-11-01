@@ -6,9 +6,10 @@ services:
   - docker
 
 env:
-  - SONARQUBE_VERSION="lts"
-  - MYSQL_VERSION="5.7"
-  - COMPOSE_FILE="~/SonarOnDocker/docker-compose.yml"
+  global:
+    - SONARQUBE_VERSION="lts"
+    - MYSQL_VERSION="5.7"
+    - COMPOSE_FILE="~/SonarOnDocker/docker-compose.yml"
 
 install:
   - git clone https://github.com/thyrlian/SonarOnDocker.git ~/SonarOnDocker
