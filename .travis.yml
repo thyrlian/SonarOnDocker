@@ -5,13 +5,20 @@ language: bash
 services:
   - docker
 
+env:
+  - SONARQUBE_VERSION="lts"
+  - MYSQL_VERSION="5.7"
+  - COMPOSE_FILE="~/SonarOnDocker/docker-compose.yml"
+
 install:
   - git clone https://github.com/thyrlian/SonarOnDocker.git ~/SonarOnDocker
 
 script:
-  - docker pull sonarqube
-  - docker pull mysql
-  - docker-compose -f ~/SonarOnDocker/docker-compose.yml up &
+  - docker pull sonarqube:$SONARQUBE_VERSION
+  - docker pull mysql:$MYSQL_VERSION
+  - sed -i "s/image: sonarqube/image: sonarqube:$SONARQUBE_VERSION/g" $COMPOSE_FILE
+  - sed -i "s/image: mysql/image: mysql:$MYSQL_VERSION/g" $COMPOSE_FILE
+  - docker-compose -f $COMPOSE_FILE up &
   - for ((i=1; i<=300; i++)) { sleep 1; if docker ps -aqf "ancestor=mysql" | xargs docker logs 2>&1 | grep "ready for connections" &> /dev/null && docker ps -aqf "ancestor=sonarqube" | xargs docker logs 2>&1 | grep "Process\[web\] is up" &> /dev/null; then return 0; fi } && return 1
   - curl -s -w "%{http_code}\\n" "http://localhost:9000/" -o /dev/null | grep "200\|302" &> /dev/null
 
