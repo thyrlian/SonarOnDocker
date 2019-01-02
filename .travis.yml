@@ -22,7 +22,7 @@ script:
   - docker pull mysql:$MYSQL_VERSION
   - sed -i "s/image\:\ sonarqube/image\:\ sonarqube\:$SONARQUBE_VERSION/g" $COMPOSE_FILE
   - sed -i "s/image\:\ mysql/image\:\ mysql\:$MYSQL_VERSION/g" $COMPOSE_FILE
-  - docker-compose -f $COMPOSE_FILE run --service-ports --entrypoint="" sonarqube bash -c "whoami && stat /opt/sonarqube/docker && ./bin/run.sh" &
+  - docker-compose -f $COMPOSE_FILE run --service-ports --entrypoint="" sonarqube bash -c "whoami && stat /opt/sonarqube/docker && ./bin/run.sh"
   - for ((i=1; i<=300; i++)) { sleep 1; if docker ps -aqf "ancestor=mysql:$MYSQL_VERSION" | xargs docker logs 2>&1 | grep "ready for connections" &> /dev/null && docker ps -aqf "ancestor=sonarqube:$SONARQUBE_VERSION" | xargs docker logs 2>&1 | grep "SonarQube is up" &> /dev/null; then return 0; fi } && return 1
   - curl -s -w "%{http_code}\\n" "http://localhost:9000/" -o /dev/null | grep "200\|302" &> /dev/null
 
