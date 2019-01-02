@@ -15,6 +15,9 @@ install:
   - git clone https://github.com/thyrlian/SonarOnDocker.git
 
 script:
+  - stat $TRAVIS_BUILD_DIR
+  - whoami
+  - whoami | groups
   - docker pull sonarqube:$SONARQUBE_VERSION
   - docker pull mysql:$MYSQL_VERSION
   - sed -i "s/image\:\ sonarqube/image\:\ sonarqube\:$SONARQUBE_VERSION/g" $COMPOSE_FILE
