@@ -11,6 +11,9 @@ env:
     - MYSQL_VERSION="5.7"
     - COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose.yml"
 
+git:
+  depth: 1
+
 install:
   - git clone https://github.com/thyrlian/SonarOnDocker.git
 
