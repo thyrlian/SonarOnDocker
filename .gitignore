@@ -1,2 +1,4 @@
 # persistent data on host
-data/
+data/mysql/*
+data/sonarqube/*
+!data/sonarqube/docker/
