@@ -14,6 +14,9 @@ env:
 install:
   - git clone https://github.com/thyrlian/SonarOnDocker.git
 
+before_script:
+  - docker-compose run --user="root"
+
 script:
   - docker pull sonarqube:$SONARQUBE_VERSION
   - docker pull mysql:$MYSQL_VERSION
