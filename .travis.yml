@@ -30,7 +30,7 @@ after_failure:
   - echo "---------- Docker orchestration failed! ----------"
   - echo "---------- MySQL logs ----------"
   - echo "=================================================="
-  - docker ps -aqf "ancestor=mysql" | xargs docker logs 2>&1
+  - docker ps -aqf "ancestor=mysql:$MYSQL_VERSION" | xargs docker logs 2>&1
   - echo "---------- SonarQube logs ----------"
   - echo "=================================================="
-  - docker ps -aqf "ancestor=sonarqube" | xargs docker logs 2>&1
+  - docker ps -aqf "ancestor=sonarqube:$SONARQUBE_VERSION" | xargs docker logs 2>&1
