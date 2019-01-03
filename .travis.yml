@@ -27,13 +27,21 @@ script:
   - curl -s -w "%{http_code}\\n" "http://localhost:9000/" -o /dev/null | grep "200\|302" &> /dev/null
 
 after_success:
+  - echo "☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑"
   - echo "---------- Docker orchestration succeeded! ----------"
+  - echo "☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑☑"
 
 after_failure:
+  - echo "☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒"
   - echo "---------- Docker orchestration failed! ----------"
+  - echo "☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒"
+
+after_script:
   - echo "---------- MySQL logs ----------"
   - echo "=================================================="
   - docker ps -aqf "ancestor=mysql:$MYSQL_VERSION" | xargs docker logs 2>&1
+  - echo "=================================================="
   - echo "---------- SonarQube logs ----------"
   - echo "=================================================="
   - docker ps -aqf "ancestor=sonarqube:$SONARQUBE_VERSION" | xargs docker logs 2>&1
+  - echo "=================================================="
