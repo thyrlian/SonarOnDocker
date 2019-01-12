@@ -9,7 +9,7 @@ env:
   global:
     - SONARQUBE_VERSION="lts"
     - MYSQL_VERSION="5.7"
-    - COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose.yml"
+    - COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose-mysql.yml"
 
 git:
   depth: 1
