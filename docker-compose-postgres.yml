@@ -18,8 +18,8 @@ services:
       bash -c 'bash -s <<EOF
       trap "break;exit" SIGHUP SIGINT SIGTERM
       mkdir -p /tmp/sonarqube
-      javac -d /tmp/sonarqube /opt/sonarqube/docker/com/basgeekball/db/DetectorPostgreSQL.java
-      java -cp `find /opt/sonarqube/ -name "postgresql-*.jar"`:/tmp/sonarqube com.basgeekball.db.DetectorPostgreSQL && ./bin/run.sh
+      javac -d /tmp/sonarqube /opt/sonarqube/docker/com/basgeekball/db/Detector.java
+      java -cp `find /opt/sonarqube/ -name "postgresql-*.jar"`:/tmp/sonarqube -Ddb=postgres com.basgeekball.db.Detector && ./bin/run.sh
       EOF'
   postgres:
     image: postgres
