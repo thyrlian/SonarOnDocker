@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    volumes:
+      - /opt/sonarqube/extensions
+      - ./data/sonarqube/docker:/opt/sonarqube/docker
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonar?charSet=UNICODE
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+    links:
+      - postgres
+    entrypoint: |
+      bash -c 'bash -s <<EOF
+      trap "break;exit" SIGHUP SIGINT SIGTERM
+      mkdir -p /tmp/sonarqube
+      javac -d /tmp/sonarqube /opt/sonarqube/docker/com/basgeekball/db/DetectorPostgreSQL.java
+      java -cp `find /opt/sonarqube/ -name "postgresql-*.jar"`:/tmp/sonarqube com.basgeekball.db.DetectorPostgreSQL && ./bin/run.sh
+      EOF'
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - /var/lib/postgresql
+      - /var/lib/postgresql/data
