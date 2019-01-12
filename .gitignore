@@ -2,3 +2,6 @@
 data/mysql/*
 data/sonarqube/*
 !data/sonarqube/docker/
+
+# macOS
+.DS_Store
