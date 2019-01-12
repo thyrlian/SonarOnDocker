@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Detector {
+public class DetectorMySQL {
   public static void main(String[] args) throws InterruptedException {
     try {
       Class.forName("com.mysql.jdbc.Driver");

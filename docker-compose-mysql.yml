@@ -18,8 +18,8 @@ services:
       bash -c 'bash -s <<EOF
       trap "break;exit" SIGHUP SIGINT SIGTERM
       mkdir -p /tmp/sonarqube
-      javac -d /tmp/sonarqube /opt/sonarqube/docker/com/basgeekball/db/Detector.java
-      java -cp `find /opt/sonarqube/ -name "mysql-connector*.jar"`:/tmp/sonarqube com.basgeekball.db.Detector && ./bin/run.sh
+      javac -d /tmp/sonarqube /opt/sonarqube/docker/com/basgeekball/db/DetectorMySQL.java
+      java -cp `find /opt/sonarqube/ -name "mysql-connector*.jar"`:/tmp/sonarqube com.basgeekball.db.DetectorMySQL && ./bin/run.sh
       EOF'
   mysql:
     image: mysql
