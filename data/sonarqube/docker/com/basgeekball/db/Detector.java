@@ -9,7 +9,7 @@ public class Detector {
         String driver = null;
         String name = null;
         String url = null;
-        String db = System.getProperty("db", "");
+        String db = System.getProperty("db", "").toLowerCase();
         switch (db) {
             case "mysql":
                 driver = "com.mysql.jdbc.Driver";
