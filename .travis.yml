@@ -15,7 +15,7 @@ git:
   depth: 1
 
 install:
-  - git clone https://github.com/thyrlian/SonarOnDocker.git
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/thyrlian/SonarOnDocker.git
 
 script:
   - docker pull sonarqube:$SONARQUBE_VERSION
