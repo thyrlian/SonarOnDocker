@@ -102,14 +102,16 @@ docker-compose -f [PATH_OF_THIS_REPO_ON_YOUR_DISK]/docker-compose-<db>.yml up
 
 * SonarQube's plugins.
 
-    ```
+    ```bash
     /opt/sonarqube/extensions
     ```
 
 * All historical analysis data, imported rules, changed settings are saved here.
 
-    ```
+    ```bash
     /var/lib/mysql
+    # or
+    /var/lib/postgresql
     ```
 
 Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es`), let it rebuild by itself (otherwise could cause problem during upgrading).
