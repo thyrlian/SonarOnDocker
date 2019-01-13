@@ -48,7 +48,7 @@ There has to be a better way…
 
 1. Make sure that you've cloned the whole project, particularly the [***Detector.java***](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java) - for checking the readiness of database.
 
-2. Pull the desired version of docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and database(e.g. [**MySQL**](https://hub.docker.com/_/mysql) or [**PostgreSQL**](https://hub.docker.com/_/postgres)):
+2. Pull the desired version of docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and database (e.g. [**MySQL**](https://hub.docker.com/_/mysql) or [**PostgreSQL**](https://hub.docker.com/_/postgres)):
 
     ```bash
     docker pull sonarqube[:TAG]
