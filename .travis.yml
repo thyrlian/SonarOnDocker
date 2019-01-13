@@ -8,8 +8,11 @@ services:
 env:
   global:
     - SONARQUBE_VERSION="lts"
-    - MYSQL_VERSION="5.7"
-    - COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose-mysql.yml"
+
+matrix:
+  include:
+  - env: DB_NAME="mysql" DB_VERSION="5.7" DB_LOG="ready for connections" COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose-mysql.yml"
+  - env: DB_NAME="postgres" DB_VERSION="10" DB_LOG="ready to accept connections" COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose-postgres.yml"
 
 git:
   depth: 1
@@ -19,11 +22,11 @@ install:
 
 script:
   - docker pull sonarqube:$SONARQUBE_VERSION
-  - docker pull mysql:$MYSQL_VERSION
+  - docker pull $DB_NAME:$DB_VERSION
   - sed -i "s/image\:\ sonarqube/image\:\ sonarqube\:$SONARQUBE_VERSION/g" $COMPOSE_FILE
-  - sed -i "s/image\:\ mysql/image\:\ mysql\:$MYSQL_VERSION/g" $COMPOSE_FILE
+  - sed -i "s/image\:\ $DB_NAME/image\:\ $DB_NAME\:$DB_VERSION/g" $COMPOSE_FILE
   - docker-compose -f $COMPOSE_FILE run --service-ports -d sonarqube
-  - for ((i=1; i<=300; i++)) { sleep 1; if docker ps -aqf "ancestor=mysql:$MYSQL_VERSION" | xargs docker logs 2>&1 | grep "ready for connections" &> /dev/null && docker ps -aqf "ancestor=sonarqube:$SONARQUBE_VERSION" | xargs docker logs 2>&1 | grep "SonarQube is up" &> /dev/null; then return 0; fi } && return 1
+  - for ((i=1; i<=300; i++)) { sleep 1; if docker ps -aqf "ancestor=$DB_NAME:$DB_VERSION" | xargs docker logs 2>&1 | grep $DB_LOG &> /dev/null && docker ps -aqf "ancestor=sonarqube:$SONARQUBE_VERSION" | xargs docker logs 2>&1 | grep "SonarQube is up" &> /dev/null; then return 0; fi } && return 1
   - curl -s -w "%{http_code}\\n" "http://localhost:9000/" -o /dev/null | grep "200\|302" &> /dev/null
 
 after_success:
@@ -37,9 +40,9 @@ after_failure:
   - echo "☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒☒"
 
 after_script:
-  - echo "---------- MySQL logs ----------"
+  - echo "---------- DB logs ----------"
   - echo "=================================================="
-  - docker ps -aqf "ancestor=mysql:$MYSQL_VERSION" | xargs docker logs 2>&1
+  - docker ps -aqf "ancestor=$DB_NAME:$DB_VERSION" | xargs docker logs 2>&1
   - echo "=================================================="
   - echo "---------- SonarQube logs ----------"
   - echo "=================================================="
