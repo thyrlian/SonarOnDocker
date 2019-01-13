@@ -213,4 +213,4 @@ The database upgrade can take several minutes.  When the DB migration ends succe
 
 ## License
 
-Copyright (c) 2016-2019 Jing Li. **SonarOnDocker** is released under the GNU General Public License version 3. See the [LICENSE](https://github.com/thyrlian/SonarOnDocker/blob/master/LICENSE) file for details.
+Copyright (c) 2016-2019 Jing Li. **SonarOnDocker** is released under the GNU Lesser General Public License, Version 3.0. See the [LICENSE](https://github.com/thyrlian/SonarOnDocker/blob/master/LICENSE) file for details.
