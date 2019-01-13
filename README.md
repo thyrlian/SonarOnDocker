@@ -1,8 +1,12 @@
 # Sonar On Docker
 
-Complete Docker Compose guide to configure and run **SonarQube** + **MySQL** docker applications.
+A complete guide to running [**SonarQube**](http://www.sonarqube.org) with any DB in [**Docker**](http://www.docker.com).
 
 [![Build Status](https://travis-ci.org/thyrlian/SonarOnDocker.svg?branch=master)](https://travis-ci.org/thyrlian/SonarOnDocker)
+
+<a href="http://www.sonarqube.org"><img src="https://raw.githubusercontent.com/thyrlian/SonarOnDocker/postgres/assets/sonarqube.png"/></a>
+
+<a href="http://www.docker.com"><img src="https://raw.githubusercontent.com/thyrlian/SonarOnDocker/postgres/assets/docker.png"/></a>
 
 ## Pitfalls
 
