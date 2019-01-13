@@ -46,22 +46,25 @@ There has to be a better way…
 
 ### Setup
 
-1. Make sure that you've cloned the whole project, particularly the [***Detector.java***](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java).
+1. Make sure that you've cloned the whole project, particularly the [***Detector.java***](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java) - for checking the readiness of database.
 
-2. Pull the desired version of docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and [**MySQL**](https://hub.docker.com/_/mysql/):
+2. Pull the desired version of docker images for [**SonarQube**](https://hub.docker.com/_/sonarqube/) and database(e.g. [**MySQL**](https://hub.docker.com/_/mysql) or [**PostgreSQL**](https://hub.docker.com/_/postgres)):
 
-    ```console
+    ```bash
     docker pull sonarqube[:TAG]
+    # pull the database image
     docker pull mysql[:TAG]
+    # or
+    docker pull postgres[:TAG]
     ```
 
-    **Heads-up**: It's NOT a good idea to directly use the latest version of MySQL without checking the SonarQube requirements ([prerequisite](https://docs.sonarqube.org/latest/requirements/requirements/) for the latest SonarQube version, or [docs](https://docs.sonarqube.org/latest/previous-versions/) for previous versions).  For instance, SonarQube 6.3 only supports MySQL 5.6 & 5.7.  And if you spin up SonarQube 6.3 with MySQL 8.0, an exception would be thrown:
+    **Heads-up**: It's NOT a good idea to directly use the latest version of a database without checking the SonarQube requirements ([prerequisite](https://docs.sonarqube.org/latest/requirements/requirements/) for the latest SonarQube version, or [docs](https://docs.sonarqube.org/latest/previous-versions/) for previous versions).  For instance, SonarQube 6.3 only supports MySQL 5.6 & 5.7.  And if you spin up SonarQube 6.3 with MySQL 8.0, an exception would be thrown:
 
     ```console
     com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server.
     ```
 
-3. (Optional - Mac only) There is a permission problem when mount a host directory in MySQL container using `boot2docker`.
+3. (Optional - MySQL & macOS only) There is a permission problem when mount a host directory in MySQL container using `boot2docker`.
 
     ```console
     [ERROR] InnoDB: Operating system error number 13 in a file operation.
@@ -70,19 +73,19 @@ There has to be a better way…
 
     **Solution**:
 
-    * Build a custom MySQL image for Mac (don't forget to change the `latest` tag in `mysql_mac/Dockerfile`):
+    * Build a custom MySQL image for macOS (don't forget to change the `latest` tag in `mysql_mac/Dockerfile`):
 
         ```console
         docker build -t mysql_mac[:TAG] [PATH_OF_THIS_REPO_ON_YOUR_DISK]/mysql_mac/
         ```
 
-    * Edit ***docker-compose.yml***, replace `image: mysql` by `image: mysql_mac`.
+    * Edit ***docker-compose-mysql.yml***, replace `image: mysql` by `image: mysql_mac`.
 
-4. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose.yml*** file.
+4. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose-<db>.yml*** file.
 
     ```
     - [PATH_TO_PERSIST_SONAR_DATA_ON_HOST]:/opt/sonarqube/extensions
-    - [PATH_TO_PERSIST_MYSQL_DATA_ON_HOST]:/var/lib/mysql
+    - [PATH_TO_PERSIST_MYSQL_DATA_ON_HOST]:[DATABASE_VOLUMES]
     ```
 
     Note: the path to persist data on host could be a relative path, e.g.: `./data/xyz`
@@ -92,21 +95,21 @@ There has to be a better way…
 ### Play
 
 ```console
-docker-compose -f [PATH_OF_THIS_REPO_ON_YOUR_DISK]/docker-compose.yml up
+docker-compose -f [PATH_OF_THIS_REPO_ON_YOUR_DISK]/docker-compose-<db>.yml up
 ```
 
 ## Persist Data
-
-* All historical analysis data, imported rules, changed settings are saved here.
-
-    ```
-    /var/lib/mysql
-    ```
 
 * SonarQube's plugins.
 
     ```
     /opt/sonarqube/extensions
+    ```
+
+* All historical analysis data, imported rules, changed settings are saved here.
+
+    ```
+    /var/lib/mysql
     ```
 
 Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es`), let it rebuild by itself (otherwise could cause problem during upgrading).
@@ -189,8 +192,8 @@ Don't try to stop the SonarQube server, if you kill the process, the SonarQube c
 
 Steps:
 
-1. Use the new sonarqube image in ***docker-compose.yml***;
-2. Run `docker-compose up`;
+1. Use the new sonarqube image in ***docker-compose-<db>.yml***;
+2. Run `docker-compose -f [PATH_OF_THIS_REPO_ON_YOUR_DISK]/docker-compose-<db>.yml up`;
 3. Wait until sonarqube is up.
 
 For big SonarQube upgrading, it also requires database upgrading, but this happens automatically.
