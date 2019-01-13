@@ -3,6 +3,7 @@ package com.basgeekball.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Detector {
     public static void main(String[] args) throws InterruptedException {
@@ -32,14 +33,15 @@ public class Detector {
             e.printStackTrace();
             System.exit(1);
         }
-        String user = "sonar";
-        String password = "sonar";
+        Properties prop = new Properties();
+        prop.put("user", "sonar");
+        prop.put("password", "sonar");
         int retries = 120;
         long interval = 500;
         Connection connection;
         for (int i = 0; i < retries; i++) {
             try {
-                connection = DriverManager.getConnection(url, user, password);
+                connection = DriverManager.getConnection(url, prop);
                 if (connection != null) {
                     System.out.println("#==> ⚡ DB connection is successful.");
                     return;
