@@ -1,7 +1,8 @@
 # persistent data on host
-data/mysql/*
 data/sonarqube/*
 !data/sonarqube/docker/
+data/mysql/*
+data/postgresql/*
 
 # macOS
 .DS_Store
