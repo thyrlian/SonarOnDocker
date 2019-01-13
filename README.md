@@ -4,9 +4,9 @@ A complete guide to running [**SonarQube**](http://www.sonarqube.org) with any D
 
 [![Build Status](https://travis-ci.org/thyrlian/SonarOnDocker.svg?branch=master)](https://travis-ci.org/thyrlian/SonarOnDocker)
 
-<a href="http://www.sonarqube.org"><img src="https://raw.githubusercontent.com/thyrlian/SonarOnDocker/postgres/assets/sonarqube.png"/></a>
+<a href="http://www.sonarqube.org"><img src="https://raw.githubusercontent.com/thyrlian/SonarOnDocker/master/assets/sonarqube.png"/></a>
 
-<a href="http://www.docker.com"><img src="https://raw.githubusercontent.com/thyrlian/SonarOnDocker/postgres/assets/docker.png"/></a>
+<a href="http://www.docker.com"><img src="https://raw.githubusercontent.com/thyrlian/SonarOnDocker/master/assets/docker.png"/></a>
 
 ## Pitfalls
 
