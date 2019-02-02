@@ -32,7 +32,7 @@ So, how to detect the readiness state of the database connection?
 
 * **Database command**: How about running `mysql -e "select 1"` to check the database availability?  Yep - but wait a second - the SonarQube container doesn't have a mysql client installed, and we have no control over the official SonarQube docker image.
 
-* **Web Server**: Yet another hack - what if we set up a minimal (one-liner) web server in the MySQL container that responds with the database status?  Something like `while true; do echo -e 'HTTP/1.1 200 OK\n\n $(db_status)' | nc -l -p 9999; done`.  Unfortunately again, netcat is not installed in the MySQL container.
+* **Web Server**: Yet another hack - what if we set up a minimal (one-liner) web server in the MySQL container that responds with the database status?  Something like `while true; do echo -e "HTTP/1.1 200 OK\r\n\r\n$(db_status)" | nc -l -q 0 -p 9999; done`.  Unfortunately again, netcat is not installed in the MySQL container.
 
 * **Database logs**: MySQL writes its readiness status to the logs, so maybe we could try searching there with `grep 'ready for connections'`.  Normally, the logs are only accessible within the MySQL container, or from the host machine, but not from the SonarQube container.  Perhaps we could try to persist MySQL logs to the host directory by adding `command: bash -c "mkdir -p /var/log/mysql && mysqld 2>&1 | tee /var/log/mysql/mysql.log"` and `volumes: ./data/mysql:/var/log/mysql`.  Then we could mount the volume to share it with the SonarQube container, so that it would be available there.  But do we really want to mess with adding `command` and `volumes` configurations on both services' sides?
 
