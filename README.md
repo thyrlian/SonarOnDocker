@@ -114,7 +114,7 @@ docker-compose -f [PATH_OF_THIS_REPO_ON_YOUR_DISK]/docker-compose-<db>.yml up
     /var/lib/postgresql
     ```
 
-Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es`), let it rebuild by itself (otherwise could cause problem during upgrading).
+Don't persist ElasticSearch indices (which is located at `/opt/sonarqube/data/es`), let it rebuild by itself, otherwise it could cause problem during upgrading.  And any ungraceful shutdown (such as crash) of SonarQube could lead to out-of-sync indices.
 
 ## Upgrading
 
