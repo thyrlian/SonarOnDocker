@@ -17,9 +17,7 @@ services:
     entrypoint: |
       bash -c 'bash -s <<EOF
       trap "break;exit" SIGHUP SIGINT SIGTERM
-      mkdir -p /tmp/sonarqube
-      javac -d /tmp/sonarqube /opt/sonarqube/docker/com/basgeekball/db/Detector.java
-      java -cp `find /opt/sonarqube/ -name "mysql-connector*.jar"`:/tmp/sonarqube -Ddb=mysql com.basgeekball.db.Detector && ./bin/run.sh
+      java -cp `find /opt/sonarqube/ -name "mysql-connector*.jar"`:/opt/sonarqube/docker -Ddb=mysql com.basgeekball.db.Detector && ./bin/run.sh
       EOF'
   mysql:
     image: mysql
