@@ -19,6 +19,9 @@ git:
 install:
   - git clone --branch=$TRAVIS_BRANCH https://github.com/thyrlian/SonarOnDocker.git
 
+before_script:
+  - sudo sysctl -w vm.max_map_count=262144
+
 script:
   - docker pull sonarqube:$SONARQUBE_VERSION
   - docker pull $DB_NAME:$DB_VERSION
