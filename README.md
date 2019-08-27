@@ -81,7 +81,7 @@ There has to be a better way…
 
     * Edit ***docker-compose-mysql.yml***, replace `image: mysql` by `image: mysql_mac`.
 
-4. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose-<db>.yml*** file.
+4. In order to persist data, you need to setup mounting data volumes: replace two mounting points under volumes in ***docker-compose-\<db\>.yml*** file.
 
     ```
     - [PATH_TO_PERSIST_SONAR_DATA_ON_HOST]:/opt/sonarqube/extensions
@@ -194,7 +194,7 @@ Don't try to stop the SonarQube server, if you kill the process, the SonarQube c
 
 Steps:
 
-1. Use the new sonarqube image in ***docker-compose-<db>.yml***;
+1. Use the new sonarqube image in ***docker-compose-\<db\>.yml***;
 2. Run `docker-compose -f [PATH_OF_THIS_REPO_ON_YOUR_DISK]/docker-compose-<db>.yml up`;
 3. Wait until sonarqube is up.
 
