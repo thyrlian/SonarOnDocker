@@ -24,7 +24,7 @@ So, how to detect the readiness state of the database connection?
 
 **What failed**:
 
-* [**`depends_on`**](https://docs.docker.com/compose/compose-file/#/dependson) **option**: You can specify this option in the docker-compose.yml file to start services in dependency order, but it won't wait for the dependent service to be ready.
+* [**`depends_on`**](https://docs.docker.com/compose/compose-file/#depends_on) **option**: You can specify this option in the docker-compose.yml file to start services in dependency order, but it won't wait for the dependent service to be ready.
 
 * **wait script**: The [wait-for-it](https://github.com/vishnubob/wait-for-it) script recommended in Docker's [Controlling startup order in Compose](https://docs.docker.com/compose/startup-order/) article can be used to check the availability of the database port and wait.  Unfortunately, this doesn't help either.  The reason is that the port will be available right after the database container starts, but that doesn’t mean the database connection is ready.  Just forget about `nc -v -n -z -w1 $HOST $PORT`.
 
