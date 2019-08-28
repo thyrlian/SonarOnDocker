@@ -28,7 +28,7 @@ So, how to detect the readiness state of the database connection?
 
 * **wait script**: The [wait-for-it](https://github.com/vishnubob/wait-for-it) script recommended in Docker's [Controlling startup order in Compose](https://docs.docker.com/compose/startup-order/) article can be used to check the availability of the database port and wait.  Unfortunately, this doesn't help either.  The reason is that the port will be available right after the database container starts, but that doesn’t mean the database connection is ready.  Just forget about `nc -v -n -z -w1 $HOST $PORT`.
 
-* [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#healthcheck) **instruction**: This new feature is available for Dockerfiles since version 1.12, but not yet for docker-compose.  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  This sounds promising, but you still have to write the command on your own, to tell Docker what to check.
+* [**`HEALTHCHECK`**](https://docs.docker.com/engine/reference/builder/#healthcheck) **instruction**: This new feature is available for Dockerfiles since version 1.12, but not yet for docker-compose (now it is [there](https://docs.docker.com/compose/compose-file/#healthcheck)).  Usage: `HEALTHCHECK [OPTIONS] CMD command`.  This sounds promising, but you still have to write the command on your own, to tell Docker what to check.
 
 * **Database command**: How about running `mysql -e "select 1"` to check the database availability?  Yep - but wait a second - the SonarQube container doesn't have a mysql client installed, and we have no control over the official SonarQube docker image.
 
