@@ -42,6 +42,10 @@ There has to be a better way…
 
 * **JDBC**: finally, there comes an easy solution - creating a [Java file](https://github.com/thyrlian/SonarOnDocker/blob/master/data/sonarqube/docker/com/basgeekball/db/Detector.java) with some JDBC code that checks the database availability (lucky for us, a Java environment and the JDBC jar file are both available in the SonarQube container).  All we needed to do is override the entrypoint of the SonarQube container to first check the database availability via this Java code, then run the default entrypoint shell script when the database is ready. Pretty slick and it works great!
 
+## Disclaimer
+
+Starting with [SonarQube v7.9](https://docs.sonarqube.org/7.9/requirements/requirements/), it will no longer support MySQL.  For more information, please visit [End of Life of MySQL Support](https://community.sonarsource.com/t/end-of-life-of-mysql-support).  As a result, for any paragraph below mentioning MySQL, please ignore.  Unless you still wanna use MySQL with SonarQube v7.7 (or earlier version).
+
 ## Getting Started
 
 ### Setup
