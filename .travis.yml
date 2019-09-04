@@ -11,6 +11,7 @@ env:
 
 matrix:
   include:
+  - env: DB_NAME="mysql" DB_VERSION="5.7" DB_LOG="ready for connections" COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose-mysql.yml" SONARQUBE_VERSION="7.7-community"
   - env: DB_NAME="postgres" DB_VERSION="10" DB_LOG="ready to accept connections" COMPOSE_FILE="$TRAVIS_BUILD_DIR/SonarOnDocker/docker-compose-postgres.yml"
 
 git:
