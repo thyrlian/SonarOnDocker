@@ -193,7 +193,7 @@ SonarQube Server upgrade process is automated, you have nothing to manually chan
 
 **Migration path**: `[YOUR_VERSION] -> LTS (if exists) -> [EXPECTED_VERSION]`
 
-[Upgrading guide by SonarQube](http://docs.sonarqube.org/display/SONAR/Upgrading) (just for reference, please follow below steps.)
+[Upgrading guide by SonarQube](https://docs.sonarqube.org/latest/setup/upgrading/) (just for reference, please follow below steps.)
 
 Don't try to stop the SonarQube server, if you kill the process, the SonarQube container exits immediately.  So you can't really upgrade SonarQube by hand within its container.  Don't worry, just try below steps.
 
